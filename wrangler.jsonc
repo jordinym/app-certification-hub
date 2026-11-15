@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "certification-hub-local",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-11-13",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "preview_urls": false,
+  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+  "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "certification-hub-local" }],
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "certification-hub-local",
+    "database_id": "local-only-certification-hub",
+    "migrations_dir": "drizzle",
+    "remote": false
+  }],
+  "vars": { "APP_ENV": "local" }
+}

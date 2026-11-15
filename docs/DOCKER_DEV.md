@@ -1,35 +1,96 @@
-# ADR-006 — Dockerized local Cloudflare development
+# ADR-006 — Desarrollo local reproducible con Docker
 
-## Goal and boundaries
-Docker standardizes Node, package manager and Wrangler versions on Mac/CI. **It does not run Cloudflare's production infrastructure.** Wrangler/Miniflare emulates the Worker runtime and provides a **local D1 binding**. Remote D1 remains managed by Cloudflare.
+## Estado
 
-## Implementation plan for S0
-1. Verify supported Next.js / OpenNext Cloudflare / Wrangler / Drizzle / Node combinations from official docs. Record tested exact versions in `docs/COMPATIBILITY.md` and lock them.
-2. Generate actual `package.json`, `package-lock.json`, `wrangler.jsonc`, `drizzle.config.ts`, app source and migrations during S0. These are **not present in this design package**.
-3. Use `Dockerfile.dev`, `compose.yaml` and `.dockerignore` in this package as **starting templates**. Docker Compose must be runnable after S0 scaffolding; it is not yet runnable now.
-4. Implement `npm run dev:cloudflare` to run the supported OpenNext/Workers local preview on `0.0.0.0:3000`, with live reload if supported. If adapter does not support this workflow, document a two-command development flow (`next dev` for UI and Workers preview for binding integration), with clear limitations; do not fake hot reload.
-5. Configure D1 binding `DB` in Wrangler and ensure `.wrangler/state` is persisted via a named volume. The container's working directory and Wrangler persistence directory must align. Avoid accidental host/container state split.
-6. Implement scripts `db:migrate:local`, `db:seed:local`, `db:backup:local` using verified Wrangler commands and explicit local selection. Remote scripts must require separate intentional invocation and approval.
-7. Add local D1 persistence integration test and restart test. `docker compose down` must preserve data; `docker compose down -v` destroys the named volume.
-8. Never mount local D1 state over source files or commit it to Git. Never bake secrets into images.
+Configuración de S0 implementada, **pendiente de aceptación del runtime**. Consultar [S0_REPORT.md](S0_REPORT.md) para resultados ejecutados. Docker Desktop del entorno de trabajo falla incluso al iniciar un contenedor Node sin aplicación; no se declara el entorno validado.
 
-## Expected developer workflow after S0
+## Requisitos y límites
+
+Docker Engine/Desktop funcional, Compose v2 y red para descargar Node, npm y Chromium. Preferir arquitectura nativa. La imagen Node tiene manifiestos amd64 y arm64; Apple Silicon no se ha probado. Docker emula Workers/D1 mediante Wrangler/Miniflare; no emula Access ni todos los límites de Cloudflare.
+
+No se necesita cuenta Cloudflare ni ejecutar `wrangler login`. La configuración raíz es exclusivamente local. Los scripts remotos rechazan la operación durante S0.
+
+## Inicio
+
 ```sh
-docker compose build
+docker compose up --build
+```
+
+El servicio `app` usa la imagen exacta de Node y npm fijado. El target `test` incluye Chromium para ejecutar pruebas en el mismo entorno. El entrypoint ejecuta `npm ci` y luego el comando solicitado. El comando por defecto genera un token local si no existe, genera tipos de bindings, aplica migraciones, siembra el catálogo y ejecuta build/preview OpenNext.
+
+La aplicación escucha en `0.0.0.0:3000` dentro del contenedor; Compose publica únicamente `127.0.0.1:3000` en el host. El healthcheck consulta `/api/health`, que comprueba la tabla de proveedores sin devolver datos personales.
+
+Los cambios de código requieren recompilar/reiniciar el preview. Para iteración UI puede usarse `npm run dev:next` con el preview detenido, pero esa ejecución no demuestra compatibilidad con Workers.
+
+## Volúmenes y dependencias
+
+- Proyecto Compose estable: `certification-hub`.
+- Código montado en `/workspace`.
+- Volumen `node_modules` con dependencias Linux; oculta cualquier instalación nativa del host.
+- Volumen `wrangler_state` en `/workspace/.wrangler/state`.
+- Migraciones, seed y preview deben utilizar la misma configuración, binding e identidad local de base.
+- No ejecutar simultáneamente dos contenedores que reinstalen el mismo volumen de dependencias. Con la app iniciada utilizar `docker compose exec app ...`.
+- `docker compose down` conserva datos. `docker compose down -v` los borra: solo para un reset intencional, nunca como paso de diagnóstico rutinario.
+
+## Operaciones explícitamente locales
+
+Con el servicio iniciado:
+
+```sh
+docker compose exec app npm run db:migrate:local
+docker compose exec app npm run db:seed:local
+docker compose exec app npm run db:backup:local
+```
+
+Con el servicio detenido, después del build:
+
+```sh
 docker compose run --rm app npm run db:migrate:local
 docker compose run --rm app npm run db:seed:local
-docker compose up
 ```
-Open http://localhost:3000 once S0 has verified the binding-aware preview. Stop with `docker compose down` (do **not** use `-v` unless intentionally resetting local D1).
 
-## Apple Silicon and architecture
-Prefer official Node Linux images supporting both arm64 and amd64. Do not force `platform: linux/amd64` unless compatibility evidence requires it. Pin Node major/minor or digest after compatibility validation; lock npm dependencies. Docker Desktop is a local prerequisite, not a cloud dependency.
+El seed no actualiza títulos personalizados ni elimina registros. Una base nueva tiene exactamente dos proveedores y cinco certificaciones; las ejecuciones posteriores pueden contener datos de prueba adicionales.
 
-## Production
-Deploy generated Worker using verified OpenNext/Cloudflare commands, not the Docker image. Keep Wrangler remote D1 bindings and migrations separate from local state. Public deployment requires enforced server-side access control.
+## Pruebas
 
-## Risks and decisions to test
-- Next.js `next dev` may not emulate Workers bindings; verify with adapter preview.
-- Bind mounts of `node_modules` and `.wrangler/state` require explicit volumes to avoid macOS/Linux native-module issues.
-- D1 local behavior may differ from production in quotas, latency and platform integrations.
-- Docker alone does not eliminate adapter compatibility risks or protect production endpoints.
+```sh
+docker compose exec app npm run typecheck
+docker compose exec app npm run lint
+docker compose exec app npm run test:unit
+docker compose exec app npm run test:integration
+docker compose exec app npm run test:e2e
+```
+
+Integración usa un directorio temporal, D1 separado y preview en puerto interno 3001. Migra y siembra dos veces, prueba restricciones, escribe/lee por el Worker y exporta/restaura una base aislada. No modifica la base de desarrollo. E2E consulta el preview principal en puerto 3000.
+
+Prueba de reinicio:
+
+```sh
+docker compose exec app npm run test:persistence -- create
+docker compose down
+docker compose up -d
+# Esperar al estado healthy indicado por docker compose ps.
+docker compose exec app npm run test:persistence -- verify
+```
+
+Comprueba el mismo ID, código y título de un registro distinto de los seeds. El registro permanece para inspección y no se elimina automáticamente.
+
+## Backups y restauración
+
+`db:backup:local` escribe SQL en `backups/`, ignorado por Git y Docker. Es una copia separada del volumen, no un sustituto de una política de retención externa. Restringir acceso a backups que contengan datos personales.
+
+Restaurar en un estado aislado, con la app detenida:
+
+```sh
+docker compose run --rm -e D1_LOCAL_STATE=/workspace/.wrangler/restore-check app npm run db:restore:local -- backups/ARCHIVO.sql
+```
+
+El script rechaza restaurar sobre `.wrangler/state`. No copiar manualmente archivos SQLite activos. La prueba de integración comprueba filas y `PRAGMA foreign_key_check` tras restaurar.
+
+## Protección y diagnóstico
+
+`.dev.vars` contiene un token aleatorio generado localmente, con permisos restringidos; no se versiona ni se copia a la imagen. La API `/api/local/catalog` exige modo local, hostname local y bearer token; rechaza origen cruzado. Su propósito es verificar el spike, no ofrecer un catálogo remoto.
+
+No exportar el token mediante variables `NEXT_PUBLIC_*`, logs, páginas ni argumentos de comandos compartidos. Los tests lo leen desde el archivo sin imprimirlo. La configuración remota y Cloudflare Access se implementarán/verificarán antes de cualquier despliegue autorizado.
+
+Si Docker no inicia ni `docker run --rm --network none node:22.23.5-bookworm-slim node --version`, resolver primero Docker Desktop. No cambiar el stack ni borrar volúmenes para encubrir ese fallo. El host macOS 12.7.6 observado no satisface el mínimo actual de Wrangler; la aceptación requiere Linux dentro de Docker.

@@ -1,47 +1,59 @@
-# Certification Hub — Cloudflare D1 MVP design package
+# Certification Hub
 
-**Application:** Certification Hub  
-**GitHub repository:** `app-certification-hub`  
-**Cloudflare Worker project:** `certification-hub`  
-**Proposed public address:** `certification-hub.<your-subdomain>.workers.dev` (actual hostname assigned by Cloudflare).  
-**Status:** design package and Codex instructions; **application code not yet implemented**.
+Aplicación personal, privada y agnóstica del proveedor para preparar certificaciones.
 
-## Stack decision
-- Next.js App Router, TypeScript strict, Tailwind CSS, Zod.
-- Cloudflare Workers for server-side execution using a compatible OpenNext Cloudflare adapter.
-- Cloudflare D1 (SQLite-compatible managed SQL), Drizzle ORM and versioned SQL migrations.
-- Wrangler for local development, deployment and D1 local/remote management.
-- Vitest and Playwright; server-side exam scoring.
+**Estado: Sprint 0 en implementación. El runtime Docker/D1 todavía no está validado.**
+Consultar [evidencia de S0](docs/S0_REPORT.md) antes de dar por ejecutados los comandos siguientes.
 
-**Do not use Prisma, PostgreSQL, a local production SQLite file, Firebase, or GitHub Pages hosting.**
-GitHub hosts the source and GitHub Actions may deploy to Cloudflare. D1 holds persistent data.
+## Stack
 
-## Contents
-- `AGENTS.md`: rules and bounded agent roles.
-- `CODEX_START.md`: copy/paste first prompt.
-- `.agents/skills/certification-hub-mvp/SKILL.md`: local workflow.
-- `docs/PRODUCT_SPEC.md`: provider-agnostic MVP scope.
-- `docs/UI_SPEC.md`: screens and flows.
-- `docs/ui-reference.png`: illustrative mockups, not source of truth.
-- `docs/ARCHITECTURE.md`: Cloudflare runtime, D1 and domain model.
-- `docs/DEPLOYMENT.md`: local/remote workflow, security and backups.
-- `docs/BACKLOG.md`: incremental delivery.
-- `docs/agents/ROLES.md`: optional read-only reviewers.
+Next.js App Router + TypeScript estricto + Tailwind + Zod, mediante OpenNext sobre Cloudflare Workers. D1 con Drizzle, migraciones SQL ejecutadas por Wrangler. Docker Compose proporciona Linux, Miniflare y D1 local; no se despliega Docker a producción.
 
-## Starting sequence
-1. Create an empty private GitHub repository named `app-certification-hub`.
-2. Extract this package at the repository root, including hidden `.agents`.
-3. Open the repository in Codex; paste `CODEX_START.md`.
-4. Codex first validates runtime/toolchain compatibility and proposes S0; **wait for approval before coding**.
-5. Do not deploy a publicly accessible writable application until access protection is verified.
+## Desarrollo local
 
-## Scope
-Initial seeded study goals: AZ-900, AI-901, AI-200, AZ-104, AZ-305. The 28-week calendar is an editable personal plan, **not official exam scheduling**. Provider-specific details must be sourced and versioned, never fabricated.
+Requisitos: Docker Desktop/Engine funcional con Compose v2 y conexión de red para descargar la imagen, paquetes y Chromium. No se necesitan cuenta ni credenciales Cloudflare.
 
-## Codex skill (important)
-The skill is included at `.agents/skills/certification-hub-mvp/SKILL.md`. On macOS, press Command+Shift+. in Finder to show hidden `.agents`. The GitHub repository name is `app-certification-hub`.
+```sh
+docker compose up --build
+```
 
-## Local development with Docker (Sprint 0 target)
-`Dockerfile.dev`, `compose.yaml`, `.dockerignore` and `.nvmrc` are included as templates. **This package is not runnable yet**: Codex must generate Next.js source, package manifests/lockfile, Wrangler bindings, Drizzle schema/migrations and scripts in Sprint 0. See `docs/DOCKER_DEV.md` and `docs/COMPATIBILITY.md`.
+Objetivo: http://localhost:3000. El contenedor sincroniza dependencias con `npm ci`, aplica migraciones locales, ejecuta el seed idempotente, compila OpenNext y sirve el Worker local. El primer arranque tarda más porque incluye compilación y descarga de herramientas de pruebas.
 
-After S0 verification, expected commands: `docker compose build`, `docker compose run --rm app npm run db:migrate:local`, `docker compose run --rm app npm run db:seed:local`, `docker compose up`. `docker compose down` preserves D1 volume; `docker compose down -v` deletes it.
+```sh
+docker compose exec app npm run typecheck
+docker compose exec app npm run lint
+docker compose exec app npm run test:unit
+docker compose exec app npm run test:integration
+docker compose exec app npm run test:e2e
+```
+
+No iniciar dos contenedores que reinstalen simultáneamente el mismo volumen de dependencias. Con la app iniciada, usar `exec`; para operaciones con la app detenida, usar `run --rm app`.
+
+```sh
+docker compose exec app npm run test:persistence -- create
+docker compose down
+docker compose up -d
+# Esperar a que el contenedor esté healthy.
+docker compose exec app npm run test:persistence -- verify
+```
+
+`down` conserva D1; `down -v` lo borra. Los fixtures de persistencia son datos locales de prueba y permanecen para demostrar el reinicio.
+
+## Alcance actual
+
+Página mínima de catálogo inicial y API local de diagnóstico protegida por token generado en `.dev.vars`. Los scripts remotos están deshabilitados. La aplicación no está preparada para publicación: la autenticación Cloudflare Access y su validación real se completarán antes del despliegue autorizado.
+
+Seed: Microsoft con AZ-900, AI-901, AI-200, AZ-104, AZ-305; GitHub vacío. No se incluyen metadatos oficiales sin verificar, progreso ficticio ni preguntas. El CRUD funcional pertenece a S1.
+
+## Documentación
+
+- [Plan detallado S0–S4](docs/IMPLEMENTATION_PLAN.md)
+- [Backlog](docs/BACKLOG.md)
+- [Producto](docs/PRODUCT_SPEC.md) y [UI](docs/UI_SPEC.md)
+- [Arquitectura](docs/ARCHITECTURE.md) y [decisiones](docs/DECISIONS.md)
+- [Docker y operación local](docs/DOCKER_DEV.md)
+- [Compatibilidad y versiones](docs/COMPATIBILITY.md)
+- [Despliegue y protección](docs/DEPLOYMENT.md)
+- [Resultados reales de S0](docs/S0_REPORT.md)
+
+No crear recursos remotos, desplegar, activar servicios de pago ni avanzar de sprint sin autorización explícita.

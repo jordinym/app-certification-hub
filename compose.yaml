@@ -1,23 +1,27 @@
-# DEVELOPMENT TEMPLATE — becomes runnable after Sprint 0 generates package.json,
-# package-lock.json and dev:cloudflare script. Not a complete application yet.
+name: certification-hub
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile.dev
+      target: test
     working_dir: /workspace
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     volumes:
       - .:/workspace
       - node_modules:/workspace/node_modules
       - wrangler_state:/workspace/.wrangler/state
     environment:
-      NODE_ENV: development
-      HOSTNAME: 0.0.0.0
+      NEXT_TELEMETRY_DISABLED: "1"
+      WRANGLER_SEND_METRICS: "false"
     init: true
-    # S0 will define a reproducible bootstrap step using npm ci and lockfile.
-    command: ["sh", "-c", "if [ ! -f package-lock.json ]; then echo 'Run S0 scaffolding first'; exit 1; fi; npm ci && npm run dev:cloudflare"]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      start_period: 180s
+      retries: 12
 volumes:
   node_modules:
   wrangler_state:

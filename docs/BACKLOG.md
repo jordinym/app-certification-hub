@@ -1,5 +1,7 @@
 # MVP backlog — Cloudflare D1
 
+Detailed execution plan: [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md). It defines task IDs, dependencies, acceptance tests and approval gates for S0–S4. The plan is approved; S0 is in progress. See [S0_REPORT.md](S0_REPORT.md) for actual verification results.
+
 | Sprint | Vertical slice | Exit gate |
 |---|---|---|
 | **S0** | Compatibility spike; Next.js + OpenNext Cloudflare + Wrangler + D1 binding; Drizzle schema, migrations and idempotent seeds | Local Worker reads/writes local D1; five Azure certifications + GitHub provider seeded; lint/typecheck/unit tests; documented commands |
