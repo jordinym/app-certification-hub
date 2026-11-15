@@ -1,0 +1,17 @@
+.git
+.github
+node_modules
+.next
+.open-next
+.wrangler
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+*.db
+*.sqlite
+coverage
+playwright-report
+test-results
+.DS_Store
