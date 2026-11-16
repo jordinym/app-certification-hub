@@ -33,3 +33,22 @@ Codex must determine and document **exact current CLI commands** after selecting
 
 ## Docker-first developer setup
 See `docs/DOCKER_DEV.md` for the Docker Compose workflow, persistent `.wrangler/state` volume and explicit local migration/seed commands. `compose.yaml` and `Dockerfile.dev` are templates; Codex must generate app files, scripts and lockfile in S0 before they can run. Docker does not deploy to Cloudflare and does not replace remote D1 access controls.
+
+## S0 operational boundary
+
+The root `wrangler.jsonc` is **local-only**. Remote npm scripts currently exit with an error. Never deploy that configuration or reuse its local bearer token as production authentication. S0 has not created a Worker, remote D1 or Access application.
+
+Before enabling remote scripts, prepare a separate reviewed configuration with the real database UUID, remote-only secrets and no local access bypass. Every remote migration/seed/export command must select that configuration and `--remote` explicitly. Use OpenNext for the application build/deploy path; do not deploy the Docker image.
+
+## Future manual Access setup (requires separate authorization)
+
+1. Keep application routes disabled while creating/configuring the authorized Worker and D1 resources.
+2. In the dashboard, open **Workers & Pages**, choose `certification-hub`, and open its **Access** tab.
+3. Enable Worker protection and choose **All traffic**, covering production and previews.
+4. Select an Access policy restricted to the one approved identity. Do not use an entire email domain as a substitute for single-user authorization.
+5. Apply the policy; record issuer, audience and intended session duration for the server validator.
+6. Configure JWT signature/issuer/audience/expiry validation and the identity allowlist in application code before enabling routes.
+7. Test each actual hostname: anonymous access, invalid/expired token, wrong identity and valid identity. Test mutations directly, not only browser navigation.
+8. Only after those checks, authorize normal use and verify remote D1 persistence. Keep unexpected hosts/previews disabled or protected.
+
+Dashboard path verified against [Cloudflare's Worker Access documentation](https://developers.cloudflare.com/workers/configuration/cloudflare-access/). This runbook is preparation, not evidence that Access is enabled. Recheck account availability, quotas and billing before creating resources. Do not change account-wide protection for unrelated Workers without separate authorization.

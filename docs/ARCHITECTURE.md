@@ -46,3 +46,15 @@ AI generation, automatic Microsoft/GitHub imports, SaaS users/teams, payment, Re
 
 ## ADR-006 — Reproducible local runtime
 Local development is Docker Compose (one Node/Next.js/OpenNext/Wrangler container) plus a named volume for Wrangler D1 local state. No separate D1 database server. The local Worker preview must be validated against the D1 binding; `next dev` alone is not sufficient evidence. See `docs/DOCKER_DEV.md`. Production deploys to Cloudflare Workers + remote D1 without Docker. Pin and record tested versions in `docs/COMPATIBILITY.md`.
+
+
+## S0 implementation notes
+
+- Twelve base tables are defined in `src/server/db/schema.ts`; `credential_records` remains deferred. Drizzle generates SQL into `drizzle/`; Wrangler is the only migration executor. Do not edit applied migrations or use `drizzle-kit push`.
+- Resources have exactly one scope (certification, version or domain). Ancestors are derived through joins; this avoids conflicting associations.
+- Tasks carry a nullable `exam_version_id` when linked to a domain. Composite foreign keys enforce that the plan and domain share that version. Attempt snapshots similarly carry the version for cross-version integrity.
+- JSON columns have SQL validity checks and versioned Zod contracts. Publication rules, snapshot freezing and grading are S3 services, not delivered by schema alone.
+- All deletes affecting referenced history use RESTRICT. No history deletion endpoints exist in S0.
+- The root Wrangler configuration is local-only. It disables workers.dev/preview URLs and uses a clearly local database identifier. No remote UUID or production config exists yet.
+- The local diagnostic API is protected by a generated bearer token and same-origin checks. This is not production authentication; remote scripts fail closed until explicit setup and approval.
+- `src/server/db/client.ts` owns D1 binding access. Routes and presentational components do not query DB bindings directly.

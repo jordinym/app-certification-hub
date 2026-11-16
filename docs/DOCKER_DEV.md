@@ -16,7 +16,7 @@ No se necesita cuenta Cloudflare ni ejecutar `wrangler login`. La configuración
 docker compose up --build
 ```
 
-El servicio `app` usa la imagen exacta de Node y npm fijado. El target `test` incluye Chromium para ejecutar pruebas en el mismo entorno. El entrypoint ejecuta `npm ci` y luego el comando solicitado. El comando por defecto genera un token local si no existe, genera tipos de bindings, aplica migraciones, siembra el catálogo y ejecuta build/preview OpenNext.
+El servicio `app` usa la imagen exacta de Node y npm fijado. El target `test` incluye Chromium para ejecutar pruebas en el mismo entorno. La imagen ejecuta `npm ci`. El entrypoint comprueba una huella de package.json, lockfile, .npmrc, Node, npm y plataforma; ejecuta `npm ci` únicamente si no coincide y luego inicia el comando solicitado. Para reparar una modificación manual de node_modules, ejecutar `node scripts/dependencies.mjs force` con la aplicación detenida. El comando por defecto genera un token local si no existe, genera tipos de bindings, aplica migraciones, siembra el catálogo y ejecuta build/preview OpenNext.
 
 La aplicación escucha en `0.0.0.0:3000` dentro del contenedor; Compose publica únicamente `127.0.0.1:3000` en el host. El healthcheck consulta `/api/health`, que comprueba la tabla de proveedores sin devolver datos personales.
 
@@ -73,7 +73,7 @@ docker compose up -d
 docker compose exec app npm run test:persistence -- verify
 ```
 
-Comprueba el mismo ID, código y título de un registro distinto de los seeds. El registro permanece para inspección y no se elimina automáticamente.
+Comprueba el mismo ID, código y título de un registro distinto de los seeds. Después de verificar, `npm run test:persistence -- cleanup` elimina únicamente el fixture registrado y sin modificaciones; no ofrece un endpoint genérico de borrado.
 
 ## Backups y restauración
 
@@ -85,7 +85,7 @@ Restaurar en un estado aislado, con la app detenida:
 docker compose run --rm -e D1_LOCAL_STATE=/workspace/.wrangler/restore-check app npm run db:restore:local -- backups/ARCHIVO.sql
 ```
 
-El script rechaza restaurar sobre `.wrangler/state`. No copiar manualmente archivos SQLite activos. La prueba de integración comprueba filas y `PRAGMA foreign_key_check` tras restaurar.
+El script rechaza restaurar sobre `.wrangler/state` de desarrollo o sobre el estado por defecto de la configuración elegida. Wrangler 4.162.0 no admite `--persist-to` en exportación: backup exige el estado `.wrangler/state` junto a la configuración seleccionada (`D1_LOCAL_CONFIG`, por defecto la raíz). Exporta esquema y datos por separado y los combina en ese orden, para que todas las tablas existan antes de insertar filas. No ejecutar migraciones concurrentes durante el backup. No copiar manualmente archivos SQLite activos. La prueba de integración comprueba filas y `PRAGMA foreign_key_check` tras restaurar.
 
 ## Protección y diagnóstico
 

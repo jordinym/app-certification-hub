@@ -17,7 +17,7 @@ Requisitos: Docker Desktop/Engine funcional con Compose v2 y conexión de red pa
 docker compose up --build
 ```
 
-Objetivo: http://localhost:3000. El contenedor sincroniza dependencias con `npm ci`, aplica migraciones locales, ejecuta el seed idempotente, compila OpenNext y sirve el Worker local. El primer arranque tarda más porque incluye compilación y descarga de herramientas de pruebas.
+Objetivo: http://localhost:3000. La imagen instala con `npm ci`; el contenedor verifica la huella del lockfile, Node, npm y plataforma, reinstalando cuando cambia. Después, aplica migraciones locales, ejecuta el seed idempotente, compila OpenNext y sirve el Worker local. El primer arranque tarda más porque incluye compilación y descarga de herramientas de pruebas.
 
 ```sh
 docker compose exec app npm run typecheck
@@ -37,7 +37,7 @@ docker compose up -d
 docker compose exec app npm run test:persistence -- verify
 ```
 
-`down` conserva D1; `down -v` lo borra. Los fixtures de persistencia son datos locales de prueba y permanecen para demostrar el reinicio.
+`down` conserva D1; `down -v` lo borra. Tras verificar el reinicio, `npm run test:persistence -- cleanup` elimina únicamente el fixture local registrado.
 
 ## Alcance actual
 

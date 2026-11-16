@@ -1,0 +1,1329 @@
+{
+  "version": "6",
+  "dialect": "sqlite",
+  "id": "1393ccf8-564c-4e27-8b74-bf4c641511d1",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "attempt_answers": {
+      "name": "attempt_answers",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "attempt_question_id": {
+          "name": "attempt_question_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "selected_options_json": {
+          "name": "selected_options_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "is_correct": {
+          "name": "is_correct",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "answered_at": {
+          "name": "answered_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "answers_question_unique": {
+          "name": "answers_question_unique",
+          "columns": [
+            "attempt_question_id"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "attempt_answers_attempt_question_id_attempt_questions_id_fk": {
+          "name": "attempt_answers_attempt_question_id_attempt_questions_id_fk",
+          "tableFrom": "attempt_answers",
+          "tableTo": "attempt_questions",
+          "columnsFrom": [
+            "attempt_question_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "answers_boolean_check": {
+          "name": "answers_boolean_check",
+          "value": "\"attempt_answers\".\"is_correct\" IS NULL OR \"attempt_answers\".\"is_correct\" IN (0, 1)"
+        },
+        "answers_json_check": {
+          "name": "answers_json_check",
+          "value": "json_valid(\"attempt_answers\".\"selected_options_json\") AND json_type(\"attempt_answers\".\"selected_options_json\") = 'array'"
+        }
+      }
+    },
+    "attempt_questions": {
+      "name": "attempt_questions",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "attempt_id": {
+          "name": "attempt_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "exam_version_id": {
+          "name": "exam_version_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "question_id": {
+          "name": "question_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "ordinal": {
+          "name": "ordinal",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "question_snapshot_json": {
+          "name": "question_snapshot_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "answer_key_snapshot_json": {
+          "name": "answer_key_snapshot_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "attempt_questions_ordinal_unique": {
+          "name": "attempt_questions_ordinal_unique",
+          "columns": [
+            "attempt_id",
+            "ordinal"
+          ],
+          "isUnique": true
+        },
+        "attempt_questions_source_idx": {
+          "name": "attempt_questions_source_idx",
+          "columns": [
+            "question_id",
+            "exam_version_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "attempt_questions_attempt_id_exam_version_id_exam_attempts_id_exam_version_id_fk": {
+          "name": "attempt_questions_attempt_id_exam_version_id_exam_attempts_id_exam_version_id_fk",
+          "tableFrom": "attempt_questions",
+          "tableTo": "exam_attempts",
+          "columnsFrom": [
+            "attempt_id",
+            "exam_version_id"
+          ],
+          "columnsTo": [
+            "id",
+            "exam_version_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "attempt_questions_question_id_exam_version_id_questions_id_exam_version_id_fk": {
+          "name": "attempt_questions_question_id_exam_version_id_questions_id_exam_version_id_fk",
+          "tableFrom": "attempt_questions",
+          "tableTo": "questions",
+          "columnsFrom": [
+            "question_id",
+            "exam_version_id"
+          ],
+          "columnsTo": [
+            "id",
+            "exam_version_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "attempt_questions_ordinal_check": {
+          "name": "attempt_questions_ordinal_check",
+          "value": "\"attempt_questions\".\"ordinal\" > 0"
+        },
+        "attempt_questions_json_check": {
+          "name": "attempt_questions_json_check",
+          "value": "json_valid(\"attempt_questions\".\"question_snapshot_json\") AND json_valid(\"attempt_questions\".\"answer_key_snapshot_json\")"
+        }
+      }
+    },
+    "certifications": {
+      "name": "certifications",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "provider_id": {
+          "name": "provider_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "code": {
+          "name": "code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "level": {
+          "name": "level",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'active'"
+        }
+      },
+      "indexes": {
+        "certifications_provider_code_unique": {
+          "name": "certifications_provider_code_unique",
+          "columns": [
+            "provider_id",
+            "code"
+          ],
+          "isUnique": true
+        },
+        "certifications_provider_idx": {
+          "name": "certifications_provider_idx",
+          "columns": [
+            "provider_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "certifications_provider_id_providers_id_fk": {
+          "name": "certifications_provider_id_providers_id_fk",
+          "tableFrom": "certifications",
+          "tableTo": "providers",
+          "columnsFrom": [
+            "provider_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "certifications_code_normalized": {
+          "name": "certifications_code_normalized",
+          "value": "\"certifications\".\"code\" = upper(trim(\"certifications\".\"code\")) AND length(\"certifications\".\"code\") > 0"
+        },
+        "certifications_title_nonempty": {
+          "name": "certifications_title_nonempty",
+          "value": "length(trim(\"certifications\".\"title\")) > 0"
+        },
+        "certifications_status_check": {
+          "name": "certifications_status_check",
+          "value": "\"certifications\".\"status\" IN ('active', 'archived')"
+        }
+      }
+    },
+    "exam_attempts": {
+      "name": "exam_attempts",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "exam_version_id": {
+          "name": "exam_version_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "mode": {
+          "name": "mode",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'in_progress'"
+        },
+        "started_at": {
+          "name": "started_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "submitted_at": {
+          "name": "submitted_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "correct_count": {
+          "name": "correct_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "graded_count": {
+          "name": "graded_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "attempts_id_version_unique": {
+          "name": "attempts_id_version_unique",
+          "columns": [
+            "id",
+            "exam_version_id"
+          ],
+          "isUnique": true
+        },
+        "attempts_version_started_idx": {
+          "name": "attempts_version_started_idx",
+          "columns": [
+            "exam_version_id",
+            "started_at"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "exam_attempts_exam_version_id_exam_versions_id_fk": {
+          "name": "exam_attempts_exam_version_id_exam_versions_id_fk",
+          "tableFrom": "exam_attempts",
+          "tableTo": "exam_versions",
+          "columnsFrom": [
+            "exam_version_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "attempts_mode_check": {
+          "name": "attempts_mode_check",
+          "value": "\"exam_attempts\".\"mode\" IN ('practice', 'timed')"
+        },
+        "attempts_state_check": {
+          "name": "attempts_state_check",
+          "value": "(\"exam_attempts\".\"status\" = 'in_progress' AND \"exam_attempts\".\"submitted_at\" IS NULL AND \"exam_attempts\".\"correct_count\" IS NULL AND \"exam_attempts\".\"graded_count\" IS NULL) OR (\"exam_attempts\".\"status\" = 'submitted' AND \"exam_attempts\".\"submitted_at\" IS NOT NULL AND \"exam_attempts\".\"correct_count\" IS NOT NULL AND \"exam_attempts\".\"graded_count\" IS NOT NULL AND \"exam_attempts\".\"graded_count\" > 0 AND \"exam_attempts\".\"correct_count\" BETWEEN 0 AND \"exam_attempts\".\"graded_count\" AND \"exam_attempts\".\"submitted_at\" >= \"exam_attempts\".\"started_at\")"
+        }
+      }
+    },
+    "exam_domains": {
+      "name": "exam_domains",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "exam_version_id": {
+          "name": "exam_version_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "weight_min": {
+          "name": "weight_min",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "weight_max": {
+          "name": "weight_max",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "sort_order": {
+          "name": "sort_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "domains_version_order_unique": {
+          "name": "domains_version_order_unique",
+          "columns": [
+            "exam_version_id",
+            "sort_order"
+          ],
+          "isUnique": true
+        },
+        "domains_id_version_unique": {
+          "name": "domains_id_version_unique",
+          "columns": [
+            "id",
+            "exam_version_id"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "exam_domains_exam_version_id_exam_versions_id_fk": {
+          "name": "exam_domains_exam_version_id_exam_versions_id_fk",
+          "tableFrom": "exam_domains",
+          "tableTo": "exam_versions",
+          "columnsFrom": [
+            "exam_version_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "domains_weights_check": {
+          "name": "domains_weights_check",
+          "value": "(\"exam_domains\".\"weight_min\" IS NULL OR \"exam_domains\".\"weight_min\" BETWEEN 0 AND 100) AND (\"exam_domains\".\"weight_max\" IS NULL OR \"exam_domains\".\"weight_max\" BETWEEN 0 AND 100) AND (\"exam_domains\".\"weight_min\" IS NULL OR \"exam_domains\".\"weight_max\" IS NULL OR \"exam_domains\".\"weight_min\" <= \"exam_domains\".\"weight_max\")"
+        },
+        "domains_order_check": {
+          "name": "domains_order_check",
+          "value": "\"exam_domains\".\"sort_order\" >= 0"
+        },
+        "domains_title_nonempty": {
+          "name": "domains_title_nonempty",
+          "value": "length(trim(\"exam_domains\".\"title\")) > 0"
+        }
+      }
+    },
+    "exam_versions": {
+      "name": "exam_versions",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "certification_id": {
+          "name": "certification_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "label": {
+          "name": "label",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "effective_from": {
+          "name": "effective_from",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "retired_at": {
+          "name": "retired_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "official_url": {
+          "name": "official_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "verified_at": {
+          "name": "verified_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'draft'"
+        }
+      },
+      "indexes": {
+        "versions_certification_label_unique": {
+          "name": "versions_certification_label_unique",
+          "columns": [
+            "certification_id",
+            "label"
+          ],
+          "isUnique": true
+        },
+        "versions_id_certification_unique": {
+          "name": "versions_id_certification_unique",
+          "columns": [
+            "id",
+            "certification_id"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "exam_versions_certification_id_certifications_id_fk": {
+          "name": "exam_versions_certification_id_certifications_id_fk",
+          "tableFrom": "exam_versions",
+          "tableTo": "certifications",
+          "columnsFrom": [
+            "certification_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "versions_status_check": {
+          "name": "versions_status_check",
+          "value": "\"exam_versions\".\"status\" IN ('draft', 'active', 'retired')"
+        },
+        "versions_label_nonempty": {
+          "name": "versions_label_nonempty",
+          "value": "length(trim(\"exam_versions\".\"label\")) > 0"
+        }
+      }
+    },
+    "learning_resources": {
+      "name": "learning_resources",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "certification_id": {
+          "name": "certification_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "exam_version_id": {
+          "name": "exam_version_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "domain_id": {
+          "name": "domain_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "url": {
+          "name": "url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "kind": {
+          "name": "kind",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "verified_at": {
+          "name": "verified_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "resources_certification_idx": {
+          "name": "resources_certification_idx",
+          "columns": [
+            "certification_id"
+          ],
+          "isUnique": false
+        },
+        "resources_version_idx": {
+          "name": "resources_version_idx",
+          "columns": [
+            "exam_version_id"
+          ],
+          "isUnique": false
+        },
+        "resources_domain_idx": {
+          "name": "resources_domain_idx",
+          "columns": [
+            "domain_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "learning_resources_certification_id_certifications_id_fk": {
+          "name": "learning_resources_certification_id_certifications_id_fk",
+          "tableFrom": "learning_resources",
+          "tableTo": "certifications",
+          "columnsFrom": [
+            "certification_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "learning_resources_exam_version_id_exam_versions_id_fk": {
+          "name": "learning_resources_exam_version_id_exam_versions_id_fk",
+          "tableFrom": "learning_resources",
+          "tableTo": "exam_versions",
+          "columnsFrom": [
+            "exam_version_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "learning_resources_domain_id_exam_domains_id_fk": {
+          "name": "learning_resources_domain_id_exam_domains_id_fk",
+          "tableFrom": "learning_resources",
+          "tableTo": "exam_domains",
+          "columnsFrom": [
+            "domain_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "resources_one_scope": {
+          "name": "resources_one_scope",
+          "value": "(\"learning_resources\".\"certification_id\" IS NOT NULL) + (\"learning_resources\".\"exam_version_id\" IS NOT NULL) + (\"learning_resources\".\"domain_id\" IS NOT NULL) = 1"
+        },
+        "resources_kind_check": {
+          "name": "resources_kind_check",
+          "value": "\"learning_resources\".\"kind\" IN ('documentation', 'course', 'lab', 'other')"
+        }
+      }
+    },
+    "providers": {
+      "name": "providers",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "providers_slug_unique": {
+          "name": "providers_slug_unique",
+          "columns": [
+            "slug"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "providers_name_nonempty": {
+          "name": "providers_name_nonempty",
+          "value": "length(trim(\"providers\".\"name\")) > 0"
+        }
+      }
+    },
+    "question_options": {
+      "name": "question_options",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "question_id": {
+          "name": "question_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "body": {
+          "name": "body",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "is_correct": {
+          "name": "is_correct",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sort_order": {
+          "name": "sort_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "options_question_order_unique": {
+          "name": "options_question_order_unique",
+          "columns": [
+            "question_id",
+            "sort_order"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "question_options_question_id_questions_id_fk": {
+          "name": "question_options_question_id_questions_id_fk",
+          "tableFrom": "question_options",
+          "tableTo": "questions",
+          "columnsFrom": [
+            "question_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "options_boolean_check": {
+          "name": "options_boolean_check",
+          "value": "\"question_options\".\"is_correct\" IN (0, 1)"
+        },
+        "options_order_check": {
+          "name": "options_order_check",
+          "value": "\"question_options\".\"sort_order\" >= 0"
+        }
+      }
+    },
+    "questions": {
+      "name": "questions",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "exam_version_id": {
+          "name": "exam_version_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "domain_id": {
+          "name": "domain_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "stem": {
+          "name": "stem",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "explanation": {
+          "name": "explanation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "question_type": {
+          "name": "question_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "review_status": {
+          "name": "review_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'draft'"
+        },
+        "source_url": {
+          "name": "source_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "verified_at": {
+          "name": "verified_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "questions_id_version_unique": {
+          "name": "questions_id_version_unique",
+          "columns": [
+            "id",
+            "exam_version_id"
+          ],
+          "isUnique": true
+        },
+        "questions_version_review_idx": {
+          "name": "questions_version_review_idx",
+          "columns": [
+            "exam_version_id",
+            "review_status"
+          ],
+          "isUnique": false
+        },
+        "questions_domain_idx": {
+          "name": "questions_domain_idx",
+          "columns": [
+            "domain_id",
+            "exam_version_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "questions_exam_version_id_exam_versions_id_fk": {
+          "name": "questions_exam_version_id_exam_versions_id_fk",
+          "tableFrom": "questions",
+          "tableTo": "exam_versions",
+          "columnsFrom": [
+            "exam_version_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "questions_domain_id_exam_version_id_exam_domains_id_exam_version_id_fk": {
+          "name": "questions_domain_id_exam_version_id_exam_domains_id_exam_version_id_fk",
+          "tableFrom": "questions",
+          "tableTo": "exam_domains",
+          "columnsFrom": [
+            "domain_id",
+            "exam_version_id"
+          ],
+          "columnsTo": [
+            "id",
+            "exam_version_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "questions_type_check": {
+          "name": "questions_type_check",
+          "value": "\"questions\".\"question_type\" IN ('single', 'multiple')"
+        },
+        "questions_review_check": {
+          "name": "questions_review_check",
+          "value": "\"questions\".\"review_status\" IN ('draft', 'reviewed', 'published', 'archived')"
+        },
+        "questions_content_check": {
+          "name": "questions_content_check",
+          "value": "length(trim(\"questions\".\"stem\")) > 0 AND length(trim(\"questions\".\"explanation\")) > 0"
+        }
+      }
+    },
+    "study_plans": {
+      "name": "study_plans",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "certification_id": {
+          "name": "certification_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "exam_version_id": {
+          "name": "exam_version_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "start_date": {
+          "name": "start_date",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "end_date": {
+          "name": "end_date",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "timezone": {
+          "name": "timezone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'planned'"
+        }
+      },
+      "indexes": {
+        "plans_id_version_unique": {
+          "name": "plans_id_version_unique",
+          "columns": [
+            "id",
+            "exam_version_id"
+          ],
+          "isUnique": true
+        },
+        "plans_certification_idx": {
+          "name": "plans_certification_idx",
+          "columns": [
+            "certification_id"
+          ],
+          "isUnique": false
+        },
+        "plans_version_idx": {
+          "name": "plans_version_idx",
+          "columns": [
+            "exam_version_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "study_plans_certification_id_certifications_id_fk": {
+          "name": "study_plans_certification_id_certifications_id_fk",
+          "tableFrom": "study_plans",
+          "tableTo": "certifications",
+          "columnsFrom": [
+            "certification_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "study_plans_exam_version_id_certification_id_exam_versions_id_certification_id_fk": {
+          "name": "study_plans_exam_version_id_certification_id_exam_versions_id_certification_id_fk",
+          "tableFrom": "study_plans",
+          "tableTo": "exam_versions",
+          "columnsFrom": [
+            "exam_version_id",
+            "certification_id"
+          ],
+          "columnsTo": [
+            "id",
+            "certification_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "plans_dates_check": {
+          "name": "plans_dates_check",
+          "value": "\"study_plans\".\"start_date\" GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND \"study_plans\".\"end_date\" GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND \"study_plans\".\"start_date\" <= \"study_plans\".\"end_date\""
+        },
+        "plans_status_check": {
+          "name": "plans_status_check",
+          "value": "\"study_plans\".\"status\" IN ('planned', 'active', 'completed', 'archived')"
+        }
+      }
+    },
+    "study_tasks": {
+      "name": "study_tasks",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "study_plan_id": {
+          "name": "study_plan_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "exam_version_id": {
+          "name": "exam_version_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "exam_domain_id": {
+          "name": "exam_domain_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "due_date": {
+          "name": "due_date",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "estimated_minutes": {
+          "name": "estimated_minutes",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "actual_minutes": {
+          "name": "actual_minutes",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'not_started'"
+        },
+        "resource_id": {
+          "name": "resource_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "tasks_plan_due_idx": {
+          "name": "tasks_plan_due_idx",
+          "columns": [
+            "study_plan_id",
+            "due_date"
+          ],
+          "isUnique": false
+        },
+        "tasks_domain_idx": {
+          "name": "tasks_domain_idx",
+          "columns": [
+            "exam_domain_id",
+            "exam_version_id"
+          ],
+          "isUnique": false
+        },
+        "tasks_resource_idx": {
+          "name": "tasks_resource_idx",
+          "columns": [
+            "resource_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "study_tasks_study_plan_id_study_plans_id_fk": {
+          "name": "study_tasks_study_plan_id_study_plans_id_fk",
+          "tableFrom": "study_tasks",
+          "tableTo": "study_plans",
+          "columnsFrom": [
+            "study_plan_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "study_tasks_resource_id_learning_resources_id_fk": {
+          "name": "study_tasks_resource_id_learning_resources_id_fk",
+          "tableFrom": "study_tasks",
+          "tableTo": "learning_resources",
+          "columnsFrom": [
+            "resource_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "study_tasks_study_plan_id_exam_version_id_study_plans_id_exam_version_id_fk": {
+          "name": "study_tasks_study_plan_id_exam_version_id_study_plans_id_exam_version_id_fk",
+          "tableFrom": "study_tasks",
+          "tableTo": "study_plans",
+          "columnsFrom": [
+            "study_plan_id",
+            "exam_version_id"
+          ],
+          "columnsTo": [
+            "id",
+            "exam_version_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "study_tasks_exam_domain_id_exam_version_id_exam_domains_id_exam_version_id_fk": {
+          "name": "study_tasks_exam_domain_id_exam_version_id_exam_domains_id_exam_version_id_fk",
+          "tableFrom": "study_tasks",
+          "tableTo": "exam_domains",
+          "columnsFrom": [
+            "exam_domain_id",
+            "exam_version_id"
+          ],
+          "columnsTo": [
+            "id",
+            "exam_version_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "tasks_domain_version_check": {
+          "name": "tasks_domain_version_check",
+          "value": "\"study_tasks\".\"exam_domain_id\" IS NULL OR \"study_tasks\".\"exam_version_id\" IS NOT NULL"
+        },
+        "tasks_minutes_check": {
+          "name": "tasks_minutes_check",
+          "value": "(\"study_tasks\".\"estimated_minutes\" IS NULL OR \"study_tasks\".\"estimated_minutes\" >= 0) AND (\"study_tasks\".\"actual_minutes\" IS NULL OR \"study_tasks\".\"actual_minutes\" >= 0)"
+        },
+        "tasks_status_check": {
+          "name": "tasks_status_check",
+          "value": "\"study_tasks\".\"status\" IN ('not_started', 'in_progress', 'completed')"
+        },
+        "tasks_date_check": {
+          "name": "tasks_date_check",
+          "value": "\"study_tasks\".\"due_date\" GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]'"
+        }
+      }
+    }
+  },
+  "views": {},
+  "enums": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "indexes": {}
+  }
+}
