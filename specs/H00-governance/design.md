@@ -1,0 +1,3 @@
+# H00 — Design approach
+
+Use existing `PRODUCT_SPEC` / `ARCHITECTURE` / `UI_SPEC` as immutable requirement references during H00. `docs/sdd/TRACEABILITY.md` is an index, not a replacement for original acceptance text. `docs/sdd/MILESTONE_ROADMAP.md` groups original tasks into product-visible HITL milestones and a parallel platform track. `ACTIVE_MILESTONE.md` declares the single executable scope. Skills describe reusable procedures; they are not assumed to be independently running agents. No OpenSpec installation at this phase. No automatic changes to original source docs; any inconsistencies are raised in H00 review.
