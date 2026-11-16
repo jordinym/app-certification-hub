@@ -8,11 +8,12 @@ Como propietario quiero que nadie sin autorización vea datos privados o modifiq
 ## Resultado observable
 Pruebas negativas de lecturas y mutaciones.
 
-## Escenarios de aceptación vinculados
-- **AC-H07-01 — Acceso denegado:** Dadas llamadas directas anónimas a endpoints privados, cuando se leen o mutan datos, entonces todos niegan acceso.
-- **AC-H07-02 — JWT inválido:** Dado JWT ausente, caducado, con firma, issuer, audience o identidad inválidos, cuando se solicita servicio, entonces se deniega.
+## Escenarios de aceptación vinculados (F02)
 
-Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`](../spec.md). La selección anterior es la vinculación principal, no una renuncia de otros AC.
+- [AC-H07-01 — Acceso denegado](../spec.md) → `H07-T01`.
+- [AC-H07-02 — JWT inválido](../spec.md) → `H07-T02`.
+
+Definiciones completas en [spec.md](../spec.md); tareas en [tasks.md](../tasks.md). Los enlaces indican entrega y evidencia, no permisos de ejecución. Todos los AC del hito permanecen obligatorios; ningún criterio se elimina por corregir su asociación.
 
 ## Diseño y datos
 - Pantallas/API: Aplicación y todas las APIs; plan remoto sin ejecución.

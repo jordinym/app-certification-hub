@@ -8,11 +8,12 @@ Como propietario quiero una recuperación comprobable y una UI accesible antes d
 ## Resultado observable
 Restauración ensayada y journeys E2E.
 
-## Escenarios de aceptación vinculados
-- **AC-H07-03 — Origen alterno:** Dadas rutas preview o subdominios no previstos, cuando se intenta acceso, entonces están protegidos o deshabilitados.
-- **AC-H07-04 — Restauración:** Dado backup de prueba, cuando se restaura a entorno aislado, entonces recuentos e integridad coinciden.
+## Escenarios de aceptación vinculados (F02)
 
-Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`](../spec.md). La selección anterior es la vinculación principal, no una renuncia de otros AC.
+- [AC-H07-04 — Restauración](../spec.md) → `H07-T05`.
+- [AC-H07-05 — Accesibilidad](../spec.md) → `H07-T06`.
+
+Definiciones completas en [spec.md](../spec.md); tareas en [tasks.md](../tasks.md). Los enlaces indican entrega y evidencia, no permisos de ejecución. Todos los AC del hito permanecen obligatorios; ningún criterio se elimina por corregir su asociación.
 
 ## Diseño y datos
 - Pantallas/API: Aplicación y todas las APIs; plan remoto sin ejecución.

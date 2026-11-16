@@ -23,7 +23,7 @@ Listado real, filtro/búsqueda, alta/edición, versiones/dominos, archivado, val
 - El PNG se debe inspeccionar directamente en el equipo cuando se implemente UI: no se ha realizado una comparación pixel por pixel de este paquete.
 
 ## Dependencias y prueba de realidad
-- Dependencia inicial: H01 AppShell; P0 Worker/D1, migraciones y autorización probadas; aprobación de alcance S1.
+- Dependencia inicial: H01 AppShell; S0 cerrado y aceptado mediante P0+P1 y A0-01..A0-10, incluyendo Worker/D1, migraciones y autorización probadas; aprobación de alcance S1 y G1/G2 propios de H02 (F03).
 - Consultas de contenido siempre desde D1 en integraciones verificadas; fixtures explícitos solo en prototipo UI autorizado.
 - Los procedimientos operativos siguen `docs/DOCKER_DEV.md` y `docs/DEPLOYMENT.md`; no reinterpretar comandos no ejecutados como pruebas.
 

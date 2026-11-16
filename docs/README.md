@@ -1,6 +1,6 @@
 # Certification Hub — Índice de documentación canónica (v3)
 
-> Estado: **PROPUESTA SDD/HITL, no aprobada**. Esta documentación es la única estructura documental activa después de la instalación. No reemplaza el código ni declara las pruebas como aprobadas.
+> Estado: **Reconciliación y roadmap aprobados en G0 — HITL-G0-001 (2026-11-16)**. Las specs/designs de implementación conservan sus gates G1/G2 pendientes; F05 y F07–F14 siguen abiertos. Esta documentación es la única estructura documental activa después de la instalación. No reemplaza el código ni declara las pruebas como aprobadas.
 
 ## Fuentes por responsabilidad (sin documentos competidores)
 | Pregunta | Documento canónico | Estado |
@@ -11,7 +11,7 @@
 | Cuál es el alcance aprobado S0–S4 | `BACKLOG.md`, `IMPLEMENTATION_PLAN.md` | Baseline original, IDs S0-01..S4-08 |
 | Qué ocurrió realmente en S0 | `S0_REPORT.md` | Registro histórico, nunca alterar retroactivamente |
 | Desarrollo y operación | `DOCKER_DEV.md`, `DEPLOYMENT.md` | Baseline original |
-| Qué hito / tarea está autorizada | `sdd/ACTIVE_MILESTONE.md` y aprobación explícita en chat | H00 audit-only propuesto |
+| Qué hito / tarea está autorizada | `sdd/ACTIVE_MILESTONE.md` y aprobación explícita en chat | H00 reconciliado; H01 solo preparación spec/design, sin implementación |
 | Cómo se ejecuta sin bucles | `sdd/EXECUTION_POLICY.md` | Norma de funcionamiento |
 | Cómo se relaciona cada historia con el baseline | `sdd/STORY_TRACEABILITY.md`, `sdd/HU_SPEC_INDEX.md` | Derivado, no sustituye baseline |
 | Qué debe cumplir cada hito | `../specs/<hito>/{spec,design,tasks,verification}.md` | Propuesta por aprobar |

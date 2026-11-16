@@ -8,11 +8,11 @@ Como usuario quiero crear y modificar un plan personal de 28 semanas para una ce
 ## Resultado observable
 Inicio, rango y tareas editables; no oficial.
 
-## Escenarios de aceptación vinculados
-- **AC-H03-02 — Plan editable:** Dada la plantilla de 28 semanas, cuando cambio inicio, nombre o contenido, entonces guarda mis modificaciones sin volver a valores por defecto.
-- **AC-H03-03 — Estados:** Dada una tarea pendiente, cuando marco en curso/completada o la reabro, entonces el estado persiste tras recargar.
+## Escenarios de aceptación vinculados (F02)
 
-Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`](../spec.md). La selección anterior es la vinculación principal, no una renuncia de otros AC.
+- [AC-H03-02 — Plan editable](../spec.md) → `H03-T02`, `H03-T06`.
+
+Definiciones completas en [spec.md](../spec.md); tareas en [tasks.md](../tasks.md). Los enlaces indican entrega y evidencia, no permisos de ejecución. Todos los AC del hito permanecen obligatorios; ningún criterio se elimina por corregir su asociación.
 
 ## Diseño y datos
 - Pantallas/API: /plans, /resources, /settings.
@@ -23,7 +23,7 @@ Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`
 - Decisión de implementación: revisar [`design.md`](../design.md) y resolver ambigüedades con HITL.
 
 ## Tareas y evidencia
-- Tareas relacionadas: `H03-T02`.
+- Tareas relacionadas: `H03-T02`, `H03-T06`.
 - Evidencia mínima: Inicio, rango y tareas editables; no oficial y una ejecución reproducible de los AC vinculados, con PASS/FAIL/NOT RUN.
 - Registro de cierre en [`verification.md`](../verification.md) con resultado, entorno, cambios y aceptación humana.
 - **Estado:** PROPOSED / NO IMPLEMENTACIÓN AUTORIZADA.

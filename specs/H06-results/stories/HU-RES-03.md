@@ -8,11 +8,13 @@ Como usuario quiero identificar dominios de menor desempeño para priorizar estu
 ## Resultado observable
 Conteo correcto por dominio.
 
-## Escenarios de aceptación vinculados
-- **AC-H06-03 — Dominio:** Dadas preguntas de dos dominios, cuando consulto desglose, entonces el denominador y el número correcto por dominio respetan el snapshot.
-- **AC-H06-04 — Integridad:** Dado banco modificado después del intento, cuando consulto resultados históricos, entonces se mantienen resultados y explicaciones congeladas.
+## Escenarios de aceptación vinculados (F02)
 
-Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`](../spec.md). La selección anterior es la vinculación principal, no una renuncia de otros AC.
+- [AC-H06-03 — Dominio](../spec.md) → `H06-T03`, `H06-T04`.
+- [AC-H06-04 — Integridad](../spec.md) → `H06-T02`, `H06-T03`, `H06-T04`.
+- [AC-H06-05 — Responsive](../spec.md) → `H06-T02`, `H06-T03`, `H06-T04`.
+
+Definiciones completas en [spec.md](../spec.md); tareas en [tasks.md](../tasks.md). Los enlaces indican entrega y evidencia, no permisos de ejecución. Todos los AC del hito permanecen obligatorios; ningún criterio se elimina por corregir su asociación.
 
 ## Diseño y datos
 - Pantallas/API: /results/[attemptId].

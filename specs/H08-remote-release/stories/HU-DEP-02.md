@@ -8,11 +8,13 @@ Como usuario quiero que mis cambios remotos persistan y sigan protegidos tras un
 ## Resultado observable
 Persistencia real y runbook operativo.
 
-## Escenarios de aceptación vinculados
-- **AC-H08-02 — Protección:** Dado Worker remoto creado, cuando usuario anónimo llama URL de prod o preview, entonces no accede a datos ni escrituras.
-- **AC-H08-03 — Datos remotos:** Dado usuario autorizado, cuando crea una certificación y vuelve a cargar tras despliegue, entonces conserva ID y datos en D1 remota.
+## Escenarios de aceptación vinculados (F02)
 
-Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`](../spec.md). La selección anterior es la vinculación principal, no una renuncia de otros AC.
+- [AC-H08-02 — Protección](../spec.md) → `H08-T02`, `H08-T04`.
+- [AC-H08-03 — Datos remotos](../spec.md) → `H08-T04`.
+- [AC-H08-05 — Cierre](../spec.md) → `H08-T05`.
+
+Definiciones completas en [spec.md](../spec.md); tareas en [tasks.md](../tasks.md). Los enlaces indican entrega y evidencia, no permisos de ejecución. Todos los AC del hito permanecen obligatorios; ningún criterio se elimina por corregir su asociación.
 
 ## Diseño y datos
 - Pantallas/API: Worker remoto protegido y D1 remota, acceso con identidad aprobada.
@@ -23,7 +25,7 @@ Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`
 - Decisión de implementación: revisar [`design.md`](../design.md) y resolver ambigüedades con HITL.
 
 ## Tareas y evidencia
-- Tareas relacionadas: `H08-T04`, `H08-T05`.
+- Tareas relacionadas: `H08-T02`, `H08-T04`, `H08-T05`.
 - Evidencia mínima: Persistencia real y runbook operativo y una ejecución reproducible de los AC vinculados, con PASS/FAIL/NOT RUN.
 - Registro de cierre en [`verification.md`](../verification.md) con resultado, entorno, cambios y aceptación humana.
 - **Estado:** PROPOSED / NO IMPLEMENTACIÓN AUTORIZADA.

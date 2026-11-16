@@ -8,11 +8,11 @@ Como usuario quiero organizar enlaces confiables de aprendizaje relacionados con
 ## Resultado observable
 URL validada y asociación coherente.
 
-## Escenarios de aceptación vinculados
-- **AC-H03-04 — Minutos:** Dada una tarea con 45 minutos, cuando la reabro y actualizo a 60, entonces el total queda 60 según el contrato aprobado, no 105 automáticamente.
-- **AC-H03-05 — Recursos:** Dado un enlace no válido o alcance incompatible, cuando envío el recurso, entonces se rechaza server-side.
+## Escenarios de aceptación vinculados (F02)
 
-Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`](../spec.md). La selección anterior es la vinculación principal, no una renuncia de otros AC.
+- [AC-H03-05 — Recursos](../spec.md) → `H03-T04`, `H03-T06`.
+
+Definiciones completas en [spec.md](../spec.md); tareas en [tasks.md](../tasks.md). Los enlaces indican entrega y evidencia, no permisos de ejecución. Todos los AC del hito permanecen obligatorios; ningún criterio se elimina por corregir su asociación.
 
 ## Diseño y datos
 - Pantallas/API: /plans, /resources, /settings.
@@ -23,7 +23,7 @@ Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`
 - Decisión de implementación: revisar [`design.md`](../design.md) y resolver ambigüedades con HITL.
 
 ## Tareas y evidencia
-- Tareas relacionadas: `H03-T04`.
+- Tareas relacionadas: `H03-T04`, `H03-T06`.
 - Evidencia mínima: URL validada y asociación coherente y una ejecución reproducible de los AC vinculados, con PASS/FAIL/NOT RUN.
 - Registro de cierre en [`verification.md`](../verification.md) con resultado, entorno, cambios y aceptación humana.
 - **Estado:** PROPOSED / NO IMPLEMENTACIÓN AUTORIZADA.

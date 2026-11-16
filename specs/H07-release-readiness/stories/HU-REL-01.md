@@ -8,11 +8,11 @@ Como operador quiero un plan seguro de Access, secretos, bindings y costes.
 ## Resultado observable
 Runbook revisado antes de recursos reales.
 
-## Escenarios de aceptación vinculados
-- **AC-H07-02 — JWT inválido:** Dado JWT ausente, caducado, con firma, issuer, audience o identidad inválidos, cuando se solicita servicio, entonces se deniega.
-- **AC-H07-03 — Origen alterno:** Dadas rutas preview o subdominios no previstos, cuando se intenta acceso, entonces están protegidos o deshabilitados.
+## Escenarios de aceptación vinculados (F02)
 
-Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`](../spec.md). La selección anterior es la vinculación principal, no una renuncia de otros AC.
+- [AC-H07-03 — Origen alterno](../spec.md) → `H07-T03`.
+
+Definiciones completas en [spec.md](../spec.md); tareas en [tasks.md](../tasks.md). Los enlaces indican entrega y evidencia, no permisos de ejecución. Todos los AC del hito permanecen obligatorios; ningún criterio se elimina por corregir su asociación.
 
 ## Diseño y datos
 - Pantallas/API: Aplicación y todas las APIs; plan remoto sin ejecución.

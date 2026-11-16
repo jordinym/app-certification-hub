@@ -10,6 +10,8 @@
 - [ ] **AC-H03-05 Recursos** — Prueba concreta y evidencia reproducible.
 - [ ] **AC-H03-06 Lista vacía** — Prueba concreta y evidencia reproducible.
 
+- [ ] **AC-H03-07 Vistas semanal/calendario (F02)** — Alternar vistas y recargar con tareas persistidas; comprobar igualdad de tareas, estados y fechas. H03-T05/H03-T06. NOT RUN.
+
 ## Criterios heredados adicionales
 - [ ] Cubrir todos los AC declarados en `spec.md` con pruebas y evidencia de ejecución real.
 

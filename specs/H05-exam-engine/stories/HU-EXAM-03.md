@@ -8,11 +8,12 @@ Como usuario quiero que mi intento preserve el contenido de las preguntas aunque
 ## Resultado observable
 Snapshot versionado.
 
-## Escenarios de aceptación vinculados
-- **AC-H05-03 — Snapshot:** Dado intento iniciado, cuando se edita luego el banco, entonces contenido, opciones, dominio y claves usadas para ese intento permanecen congeladas.
-- **AC-H05-04 — Respuesta segura:** Dado intento activo, cuando el cliente inspecciona HTML/RSC/JSON, entonces no obtiene respuestas correctas ni explicaciones prematuras.
+## Escenarios de aceptación vinculados (F02)
 
-Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`](../spec.md). La selección anterior es la vinculación principal, no una renuncia de otros AC.
+- [AC-H05-03 — Snapshot](../spec.md) → `H05-T03`, `H05-T06`.
+- [AC-H05-04 — Respuesta segura](../spec.md) → `H05-T03`, `H05-T04`, `H05-T06`.
+
+Definiciones completas en [spec.md](../spec.md); tareas en [tasks.md](../tasks.md). Los enlaces indican entrega y evidencia, no permisos de ejecución. Todos los AC del hito permanecen obligatorios; ningún criterio se elimina por corregir su asociación.
 
 ## Diseño y datos
 - Pantallas/API: /simulations y /simulations/[attemptId].
@@ -23,7 +24,7 @@ Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`
 - Decisión de implementación: revisar [`design.md`](../design.md) y resolver ambigüedades con HITL.
 
 ## Tareas y evidencia
-- Tareas relacionadas: `H05-T03`.
+- Tareas relacionadas: `H05-T03`, `H05-T04`, `H05-T06`.
 - Evidencia mínima: Snapshot versionado y una ejecución reproducible de los AC vinculados, con PASS/FAIL/NOT RUN.
 - Registro de cierre en [`verification.md`](../verification.md) con resultado, entorno, cambios y aceptación humana.
 - **Estado:** PROPOSED / NO IMPLEMENTACIÓN AUTORIZADA.

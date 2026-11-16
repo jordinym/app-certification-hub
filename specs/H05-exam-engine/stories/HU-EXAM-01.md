@@ -8,11 +8,11 @@ Como administrador del contenido quiero crear y revisar preguntas originales par
 ## Resultado observable
 Estado de revisión y publicación explícita.
 
-## Escenarios de aceptación vinculados
-- **AC-H05-01 — Revisión:** Dada pregunta no revisada o sin publicación, cuando se construye un simulacro, entonces no aparece en el conjunto elegible.
-- **AC-H05-02 — Sin preguntas:** Dada versión sin preguntas publicadas, cuando intento iniciar, entonces veo estado vacío y no se crea un intento inválido.
+## Escenarios de aceptación vinculados (F02)
 
-Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`](../spec.md). La selección anterior es la vinculación principal, no una renuncia de otros AC.
+- [AC-H05-01 — Revisión](../spec.md) → `H05-T01`, `H05-T06`.
+
+Definiciones completas en [spec.md](../spec.md); tareas en [tasks.md](../tasks.md). Los enlaces indican entrega y evidencia, no permisos de ejecución. Todos los AC del hito permanecen obligatorios; ningún criterio se elimina por corregir su asociación.
 
 ## Diseño y datos
 - Pantallas/API: /simulations y /simulations/[attemptId].
@@ -23,7 +23,7 @@ Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`
 - Decisión de implementación: revisar [`design.md`](../design.md) y resolver ambigüedades con HITL.
 
 ## Tareas y evidencia
-- Tareas relacionadas: `H05-T01`.
+- Tareas relacionadas: `H05-T01`, `H05-T06`.
 - Evidencia mínima: Estado de revisión y publicación explícita y una ejecución reproducible de los AC vinculados, con PASS/FAIL/NOT RUN.
 - Registro de cierre en [`verification.md`](../verification.md) con resultado, entorno, cambios y aceptación humana.
 - **Estado:** PROPOSED / NO IMPLEMENTACIÓN AUTORIZADA.

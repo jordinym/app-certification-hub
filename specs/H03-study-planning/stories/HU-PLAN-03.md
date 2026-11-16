@@ -8,11 +8,12 @@ Como usuario quiero marcar tareas y registrar minutos reales para medir avance.
 ## Resultado observable
 Reabrir/editar sin duplicar minutos.
 
-## Escenarios de aceptación vinculados
-- **AC-H03-03 — Estados:** Dada una tarea pendiente, cuando marco en curso/completada o la reabro, entonces el estado persiste tras recargar.
-- **AC-H03-04 — Minutos:** Dada una tarea con 45 minutos, cuando la reabro y actualizo a 60, entonces el total queda 60 según el contrato aprobado, no 105 automáticamente.
+## Escenarios de aceptación vinculados (F02)
 
-Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`](../spec.md). La selección anterior es la vinculación principal, no una renuncia de otros AC.
+- [AC-H03-03 — Estados](../spec.md) → `H03-T03`, `H03-T06`.
+- [AC-H03-04 — Minutos](../spec.md) → `H03-T03`, `H03-T06`.
+
+Definiciones completas en [spec.md](../spec.md); tareas en [tasks.md](../tasks.md). Los enlaces indican entrega y evidencia, no permisos de ejecución. Todos los AC del hito permanecen obligatorios; ningún criterio se elimina por corregir su asociación.
 
 ## Diseño y datos
 - Pantallas/API: /plans, /resources, /settings.
@@ -23,7 +24,7 @@ Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`
 - Decisión de implementación: revisar [`design.md`](../design.md) y resolver ambigüedades con HITL.
 
 ## Tareas y evidencia
-- Tareas relacionadas: `H03-T03`.
+- Tareas relacionadas: `H03-T03`, `H03-T06`.
 - Evidencia mínima: Reabrir/editar sin duplicar minutos y una ejecución reproducible de los AC vinculados, con PASS/FAIL/NOT RUN.
 - Registro de cierre en [`verification.md`](../verification.md) con resultado, entorno, cambios y aceptación humana.
 - **Estado:** PROPOSED / NO IMPLEMENTACIÓN AUTORIZADA.

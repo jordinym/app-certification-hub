@@ -8,11 +8,13 @@ Como propietario quiero desplegar Certification Hub privado en Cloudflare sin ex
 ## Resultado observable
 Access protege hosts y D1 remota es la elegida.
 
-## Escenarios de aceptación vinculados
-- **AC-H08-01 — Autorización:** Dada ausencia de aprobación GR, cuando se inicia H08, entonces ningún comando remoto se ejecuta.
-- **AC-H08-02 — Protección:** Dado Worker remoto creado, cuando usuario anónimo llama URL de prod o preview, entonces no accede a datos ni escrituras.
+## Escenarios de aceptación vinculados (F02)
 
-Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`](../spec.md). La selección anterior es la vinculación principal, no una renuncia de otros AC.
+- [AC-H08-01 — Autorización](../spec.md) → `H08-T01`.
+- [AC-H08-02 — Protección](../spec.md) → `H08-T02`, `H08-T04`.
+- [AC-H08-04 — Separación de entornos](../spec.md) → `H08-T03`.
+
+Definiciones completas en [spec.md](../spec.md); tareas en [tasks.md](../tasks.md). Los enlaces indican entrega y evidencia, no permisos de ejecución. Todos los AC del hito permanecen obligatorios; ningún criterio se elimina por corregir su asociación.
 
 ## Diseño y datos
 - Pantallas/API: Worker remoto protegido y D1 remota, acceso con identidad aprobada.

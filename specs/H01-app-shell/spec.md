@@ -14,18 +14,15 @@ Acceptance proposal:
 
 Human must review and approve scope/design before this can execute. H01 alone does not constitute S1 acceptance.
 
-## Historias / escenarios adicionales (propuestos)
-- **HU-SHELL-01 / S1-01:** Como usuario quiero navegar entre dashboard, certificaciones, planes, simulacros, recursos y ajustes desde un shell consistente.
-- **AC-H01-01:** En escritorio, al navegar con teclado entre sidebar y contenido, el foco es visible y las rutas son accesibles.
-- **AC-H01-02:** En móvil, el menú se despliega y cierra sin ocultar acciones esenciales; `aria-expanded` refleja estado.
-- **AC-H01-03:** Cargando/vacío/error son distinguibles; no presentar números de ejemplo como progreso real.
-- **AC-H01-04:** Estructura visual de tarjetas, sidebar y tipografía se revisa manualmente frente a `docs/ui-reference.png`; no exige datos D1 para aprobar layout-only.
-- **No equivale a aprobar S1:** requiere permiso para adelantar UI pese a gate S0, y nunca sustituye P0/P1.
+## Historia y criterios canónicos (F06)
 
-## Historias / escenarios adicionales (propuestos)
-- **HU-SHELL-01 / S1-01:** Como usuario quiero navegar entre dashboard, certificaciones, planes, simulacros, recursos y ajustes desde un shell consistente.
-- **AC-H01-01:** En escritorio, al navegar con teclado entre sidebar y contenido, el foco es visible y las rutas son accesibles.
-- **AC-H01-02:** En móvil, el menú se despliega y cierra sin ocultar acciones esenciales; `aria-expanded` refleja estado.
-- **AC-H01-03:** Cargando/vacío/error son distinguibles; no presentar números de ejemplo como progreso real.
-- **AC-H01-04:** Estructura visual de tarjetas, sidebar y tipografía se revisa manualmente frente a `docs/ui-reference.png`; no exige datos D1 para aprobar layout-only.
-- **No equivale a aprobar S1:** requiere permiso para adelantar UI pese a gate S0, y nunca sustituye P0/P1.
+Historia: [HU-SHELL-01](stories/HU-SHELL-01.md), origen S1-01. La ficha enlaza estos criterios; no mantiene otra definición de aceptación.
+
+- **AC-H01-01:** En escritorio, navegación por teclado entre sidebar y contenido con foco visible, ruta activa y acceso a las rutas escritas en `UI_SPEC.md`.
+- **AC-H01-02:** En móvil, el menú se despliega y cierra sin ocultar acciones esenciales; controles accesibles y `aria-expanded` anuncian su estado.
+- **AC-H01-03:** `AppShell`, `Sidebar` y tokens compartidos; cargando/vacío/error son distinguibles y las rutas pendientes tienen estados intencionales. No presentar números de ejemplo como progreso real.
+- **AC-H01-04:** Estructura de tarjetas, sidebar, espaciado y tipografía revisada manualmente frente a `docs/ui-reference.png`, con capturas desktop/móvil y comprobaciones UI acotadas registradas en `verification.md`; no exige datos D1 para aceptar layout-only.
+
+## Entrada y entorno pendientes (F03/F04)
+
+H01 no cierra S1 ni sustituye P0/P1. Adelantarlo al cierre S0 requiere excepción HITL expresa, G1 de spec/design y G2 de una tarea exacta. El entorno UI utilizable aún no está demostrado: la página actual y la configuración de desarrollo dependen de OpenNext/D1. Ver [design.md](design.md) para la propuesta mínima, sin implementación autorizada.

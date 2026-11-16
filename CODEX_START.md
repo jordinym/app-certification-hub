@@ -1,7 +1,11 @@
-# Certification Hub — Punto de inicio Codex v3
+# Certification Hub — Punto de entrada SDD/HITL
 
-1. Leer `AGENTS.md` y `docs/README.md` como índice.
-2. Leer `docs/sdd/ACTIVE_MILESTONE.md` y solo las specs del hito activo.
-3. En estado inicial ejecutar únicamente `prompts/H00_READONLY_RECONCILE.md`.
-4. NO cambiar código, correr Docker ni editar arquitectura durante H00. Solicitar G0.
-5. Tras aprobación explícita, autorizar una única task y seguir `docs/sdd/EXECUTION_POLICY.md`.
+1. Leer `AGENTS.md`, `docs/README.md` (índice y precedencia), `docs/sdd/ACTIVE_MILESTONE.md` y `docs/sdd/EXECUTION_POLICY.md`. Consultar `git status --short` para preservar cambios existentes.
+2. Leer únicamente el paquete del hito activo en `specs/<hito>/{spec,design,tasks,verification}.md`, si existe. Ampliar contexto solo por una dependencia identificada y citar archivo/sección; no recorrer todo el repositorio ni otros hitos por rutina.
+3. Determinar fase, permisos, archivos/comandos permitidos y aprobación humana aplicable. Seguir G0, G1, G2, G3 y GR definidos en la política. Ni un checkbox, ni una aprobación antigua de S0, ni «continúa» autorizan tareas nuevas. Si falta autorización o hay conflicto sin resolver, informar y detenerse.
+4. Ejecutar exclusivamente una tarea autorizada y acotada. Para implementación, exigir G1 y G2 con ID exacto; para operaciones remotas, aplicar además GR. Respetar límites y presupuesto anti-loop. No iniciar automáticamente H00, P0/P1, H01 ni otro hito.
+5. Si se solicita explícitamente la auditoría H00, consultar `prompts/H00_READONLY_RECONCILE.md`. H00 permanece **AUDIT / ONLY READ**, sin tarea de implementación: inspección local e informe, sin editar archivos, ejecutar Docker/npm/tests/builds, instalar, modificar datos ni desplegar. Entregar el informe y detenerse para G0. Una corrección de entrypoints expresamente autorizada no inicia ni aprueba H00.
+6. Mantener stack, seguridad, datos y trazabilidad del baseline según `AGENTS.md`. P0 y P1 siguen siendo obligatorios conforme a `docs/sdd/MILESTONE_ROADMAP.md`, sección “Platform track (must not disappear)”; no declarar S0 cerrado por avance de UI ni trasladar Docker/D1 al release remoto.
+7. Entregar evidencia real con el formato de `docs/sdd/EXECUTION_POLICY.md`: tarea/IDs originales, cambios, entorno, comandos/resultados, evidencia UI cuando corresponda, impacto de seguridad, pendientes y siguiente decisión. Distinguir PASS/FAIL/NOT RUN e implementado de verificado; no modificar registros fuera del alcance autorizado ni aceptar el resultado en nombre del usuario. Solicitar G3 cuando corresponda; la siguiente tarea/hito requiere autorización separada.
+
+**STOP — awaiting HITL approval**. Este entrypoint no concede permisos ni autoriza avance autónomo.

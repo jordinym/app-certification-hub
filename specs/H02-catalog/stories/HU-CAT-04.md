@@ -8,22 +8,23 @@ Como usuario quiero archivar un registro sin perder el historial ni integridad r
 ## Resultado observable
 Archivado seguro y mensajes de error claros.
 
-## Escenarios de aceptación vinculados
-- **AC-H02-04 — Validaciones:** Dado un código duplicado dentro del proveedor, cuando envío el formulario, entonces recibo un error accionable sin inserción duplicada.
-- **AC-H02-05 — Versiones y dominios:** Dadas varias versiones, cuando abro detalle, entonces cada dominio corresponde a su versión y se rechaza asociación cruzada.
+## Escenarios de aceptación vinculados (F02)
 
-Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`](../spec.md). La selección anterior es la vinculación principal, no una renuncia de otros AC.
+- [AC-H02-04 — Validaciones](../spec.md) → `H02-T02`, `H02-T04`, `H02-T05`.
+- [AC-H02-06 — Archivado](../spec.md) → `H02-T04`, `H02-T05`.
+
+Definiciones completas en [spec.md](../spec.md); tareas en [tasks.md](../tasks.md). Los enlaces indican entrega y evidencia, no permisos de ejecución. Todos los AC del hito permanecen obligatorios; ningún criterio se elimina por corregir su asociación.
 
 ## Diseño y datos
 - Pantallas/API: /certifications, /certifications/new, /certifications/[id].
-- Dependencias: H01 AppShell; P0 Worker/D1, migraciones y autorización probadas; aprobación de alcance S1.
+- Dependencias: H01 AppShell; S0 cerrado y aceptado mediante P0+P1 y A0-01..A0-10, incluyendo Worker/D1, migraciones y autorización probadas; aprobación de alcance S1 y G1/G2 propios de H02 (F03).
 - Datos y servicios: Listado real, filtro/búsqueda, alta/edición, versiones/dominos, archivado, validación, estados y E2E.
 - Validación servidor y autorización para cualquier escritura; no confundir fixtures UI con persistencia D1.
 - Fuera de alcance: Sin import automático de catálogos externos, planes ni simulacros, inventos de metadatos oficiales.
 - Decisión de implementación: revisar [`design.md`](../design.md) y resolver ambigüedades con HITL.
 
 ## Tareas y evidencia
-- Tareas relacionadas: `H02-T04`.
+- Tareas relacionadas: `H02-T02`, `H02-T04`, `H02-T05`.
 - Evidencia mínima: Archivado seguro y mensajes de error claros y una ejecución reproducible de los AC vinculados, con PASS/FAIL/NOT RUN.
 - Registro de cierre en [`verification.md`](../verification.md) con resultado, entorno, cambios y aceptación humana.
 - **Estado:** PROPOSED / NO IMPLEMENTACIÓN AUTORIZADA.

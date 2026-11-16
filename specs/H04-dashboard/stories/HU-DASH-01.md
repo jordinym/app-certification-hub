@@ -8,11 +8,13 @@ Como usuario quiero un resumen del progreso de mi preparación para priorizar qu
 ## Resultado observable
 Datos agregados desde D1.
 
-## Escenarios de aceptación vinculados
-- **AC-H04-01 — Sin datos:** Dado un usuario sin tareas, cuando abre el dashboard, entonces ve tarjetas vacías/0 y CTA, no porcentajes ilustrativos.
-- **AC-H04-02 — Progreso:** Dadas cuatro tareas elegibles y dos completadas, cuando consulto la métrica definida, entonces refleja 50 % y cambia tras reabrir una.
+## Escenarios de aceptación vinculados (F02)
 
-Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`](../spec.md). La selección anterior es la vinculación principal, no una renuncia de otros AC.
+- [AC-H04-01 — Sin datos](../spec.md) → `H04-T03`, `H04-T04`.
+- [AC-H04-02 — Progreso](../spec.md) → `H04-T01`, `H04-T02`, `H04-T03`, `H04-T04`.
+- [AC-H04-05 — Visual](../spec.md) → `H04-T03`, `H04-T04`.
+
+Definiciones completas en [spec.md](../spec.md); tareas en [tasks.md](../tasks.md). Los enlaces indican entrega y evidencia, no permisos de ejecución. Todos los AC del hito permanecen obligatorios; ningún criterio se elimina por corregir su asociación.
 
 ## Diseño y datos
 - Pantallas/API: / (dashboard).
@@ -23,7 +25,7 @@ Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`
 - Decisión de implementación: revisar [`design.md`](../design.md) y resolver ambigüedades con HITL.
 
 ## Tareas y evidencia
-- Tareas relacionadas: `H04-T01`, `H04-T02`, `H04-T03`.
+- Tareas relacionadas: `H04-T01`, `H04-T02`, `H04-T03`, `H04-T04`.
 - Evidencia mínima: Datos agregados desde D1 y una ejecución reproducible de los AC vinculados, con PASS/FAIL/NOT RUN.
 - Registro de cierre en [`verification.md`](../verification.md) con resultado, entorno, cambios y aceptación humana.
 - **Estado:** PROPOSED / NO IMPLEMENTACIÓN AUTORIZADA.

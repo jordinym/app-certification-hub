@@ -8,11 +8,12 @@ Como usuario quiero consultar mis tareas por semana y calendario.
 ## Resultado observable
 Vista coherente con persistencia.
 
-## Escenarios de aceptación vinculados
-- **AC-H03-05 — Recursos:** Dado un enlace no válido o alcance incompatible, cuando envío el recurso, entonces se rechaza server-side.
-- **AC-H03-06 — Lista vacía:** Dado que no hay plan, cuando entro en /plans, entonces aparece invitación a crear uno, sin progreso inventado.
+## Escenarios de aceptación vinculados (F02)
 
-Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`](../spec.md). La selección anterior es la vinculación principal, no una renuncia de otros AC.
+- [AC-H03-06 — Lista vacía](../spec.md) → `H03-T05`, `H03-T06`.
+- [AC-H03-07 — Vistas semanal/calendario (F02)](../spec.md) → `H03-T05`, `H03-T06`.
+
+Definiciones completas en [spec.md](../spec.md); tareas en [tasks.md](../tasks.md). Los enlaces indican entrega y evidencia, no permisos de ejecución. Todos los AC del hito permanecen obligatorios; ningún criterio se elimina por corregir su asociación.
 
 ## Diseño y datos
 - Pantallas/API: /plans, /resources, /settings.
@@ -23,7 +24,7 @@ Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`
 - Decisión de implementación: revisar [`design.md`](../design.md) y resolver ambigüedades con HITL.
 
 ## Tareas y evidencia
-- Tareas relacionadas: `H03-T05`.
+- Tareas relacionadas: `H03-T05`, `H03-T06`.
 - Evidencia mínima: Vista coherente con persistencia y una ejecución reproducible de los AC vinculados, con PASS/FAIL/NOT RUN.
 - Registro de cierre en [`verification.md`](../verification.md) con resultado, entorno, cambios y aceptación humana.
 - **Estado:** PROPOSED / NO IMPLEMENTACIÓN AUTORIZADA.

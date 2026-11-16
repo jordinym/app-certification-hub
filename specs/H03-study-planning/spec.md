@@ -56,6 +56,10 @@ Dado un enlace no válido o alcance incompatible, cuando envío el recurso, ento
 
 Dado que no hay plan, cuando entro en /plans, entonces aparece invitación a crear uno, sin progreso inventado.
 
+**AC-H03-07 — Vistas semanal/calendario (F02)**
+
+Dado un plan con tareas persistidas y fechas de estudio, cuando alterno entre las vistas semanal y calendario de `/plans` y recargo, entonces ambas muestran las mismas tareas y estados en sus fechas correspondientes, sin desplazar el día. Derivado de S2-05 y HU-PLAN-05; concreta un requisito existente, sin añadir funcionalidad. Tareas: H03-T05 y verificación H03-T06.
+
 ## Restricciones y límites
 - Fuera de alcance: Calendario oficial de Microsoft, recordatorios, automatización, tabla de sesiones si no se autoriza.
 - Toda escritura requiere autorización servidor, validación y persistencia correspondiente al entorno; nunca se valida una integración solo con componentes simulados.

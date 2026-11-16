@@ -8,11 +8,12 @@ Como usuario quiero revisar explicaciones para aprender de cada pregunta.
 ## Resultado observable
 Contenido respaldado por snapshot.
 
-## Escenarios de aceptación vinculados
-- **AC-H06-02 — Postenvío:** Dado intento terminado, cuando entro en resultados, entonces veo preguntas calificadas, explicación y porcentaje de práctica coherente.
-- **AC-H06-03 — Dominio:** Dadas preguntas de dos dominios, cuando consulto desglose, entonces el denominador y el número correcto por dominio respetan el snapshot.
+## Escenarios de aceptación vinculados (F02)
 
-Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`](../spec.md). La selección anterior es la vinculación principal, no una renuncia de otros AC.
+- [AC-H06-02 — Postenvío](../spec.md) → `H06-T01`, `H06-T02`, `H06-T04`.
+- [AC-H06-04 — Integridad](../spec.md) → `H06-T02`, `H06-T03`, `H06-T04`.
+
+Definiciones completas en [spec.md](../spec.md); tareas en [tasks.md](../tasks.md). Los enlaces indican entrega y evidencia, no permisos de ejecución. Todos los AC del hito permanecen obligatorios; ningún criterio se elimina por corregir su asociación.
 
 ## Diseño y datos
 - Pantallas/API: /results/[attemptId].
@@ -23,7 +24,7 @@ Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`
 - Decisión de implementación: revisar [`design.md`](../design.md) y resolver ambigüedades con HITL.
 
 ## Tareas y evidencia
-- Tareas relacionadas: `H06-T01`, `H06-T02`, `H06-T03`.
+- Tareas relacionadas: `H06-T01`, `H06-T02`, `H06-T03`, `H06-T04`.
 - Evidencia mínima: Contenido respaldado por snapshot y una ejecución reproducible de los AC vinculados, con PASS/FAIL/NOT RUN.
 - Registro de cierre en [`verification.md`](../verification.md) con resultado, entorno, cambios y aceptación humana.
 - **Estado:** PROPOSED / NO IMPLEMENTACIÓN AUTORIZADA.

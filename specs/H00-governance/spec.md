@@ -4,7 +4,7 @@
 Introduce executable, reviewable SDD/HITL documentation without discarding original product scope, 37 legacy task IDs, verified S0 work, decisions or UI visual reference.
 
 ## Inputs
-`docs/BACKLOG.md`, `docs/IMPLEMENTATION_PLAN.md`, `docs/PRODUCT_SPEC.md`, `docs/UI_SPEC.md`, `docs/ARCHITECTURE.md`, `docs/DECISIONS.md`, `docs/S0_REPORT.md`, `docs/agents/ROLES.md`, `AGENTS.md`, current source tree, and `docs/ui-reference.png`.
+`docs/BACKLOG.md`, `docs/IMPLEMENTATION_PLAN.md`, `docs/PRODUCT_SPEC.md`, `docs/UI_SPEC.md`, `docs/ARCHITECTURE.md`, `docs/DECISIONS.md`, `docs/S0_REPORT.md`, `.agents/roles/spec-reviewer.md`, `.agents/roles/architecture-reviewer.md`, `.agents/roles/ui-reviewer.md`, `.agents/roles/qa-reviewer.md`, `AGENTS.md`, current source tree, and `docs/ui-reference.png`.
 
 ## Acceptance
 1. Each original S0-01..10, S1-01..06, S2-01..06, S3-01..07, S4-01..08 maps to one or more milestones with no deletions.

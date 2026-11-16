@@ -3,30 +3,47 @@
 ## Mission and non-negotiables
 Personal, private-by-default, single-user, provider-agnostic Certification Hub. Keep the approved stack: Next.js App Router, strict TypeScript, Tailwind, Zod, OpenNext Cloudflare Workers, D1, Drizzle, Wrangler, Docker Compose (local), Vitest and Playwright. No alternative stack without explicit user approval. Local and remote D1 must remain separated. Protect server mutations, secrets, user data, and exam answer keys; no unreviewed published questions. Do not invent official exam data.
 
-## Sources and reading budget
-At start read only: this file, `docs/sdd/ACTIVE_MILESTONE.md`, the ACTIVE milestone's `spec.md`, `design.md`, `tasks.md`, and `verification.md` if they exist, and `git status --short`. Read other source documents only for an identified dependency, quoting file and section. Authoritative requirements remain `docs/PRODUCT_SPEC.md`, `docs/UI_SPEC.md`, `docs/ARCHITECTURE.md`, `docs/DECISIONS.md`, `docs/BACKLOG.md`, `docs/IMPLEMENTATION_PLAN.md`; original task IDs and acceptance conditions must be preserved. `docs/ui-reference.png` is visual reference only; do not import fictitious statistics or its illustrative stack.
+## Canonical sources and precedence
+`docs/README.md` is the canonical documentation index; its “Fuentes por responsabilidad” and “Precedencia cuando existe conflicto” govern source selection:
+1. Explicit user approvals, security and scope limits.
+2. Original requirement baseline and architecture decisions: `docs/PRODUCT_SPEC.md`, `docs/UI_SPEC.md`, `docs/ARCHITECTURE.md`, `docs/DECISIONS.md`, `docs/COMPATIBILITY.md`, `docs/BACKLOG.md` and `docs/IMPLEMENTATION_PLAN.md`.
+3. The milestone's explicitly accepted spec/design in `specs/<milestone>/`.
+4. Derived tasks, plans, roadmap and traceability; preserve original IDs and acceptance conditions. These do not replace the baseline or grant execution permission.
+5. `docs/ui-reference.png`: appearance only, never official data, fictitious statistics or an alternative stack.
 
-## Hard HITL gates
-- **PLAN**: describe milestone, mapping to legacy IDs, prerequisites, exclusions, acceptance criteria, risks and proposed tasks. STOP until user explicitly approves the spec/design.
-- **BUILD**: after separate explicit approval, implement **one checked/authorized task** only. Do not continue automatically to the next task or milestone.
-- **VERIFY**: record actual command, environment, result, screenshot/visual review when applicable, and open issues. STOP for user acceptance; no self-approval.
-- Do not treat an old sprint approval as authorization to change scope, deploy, run destructive commands or perform a different milestone. H00 is documentation-only. Previous S0 execution authorization stays on record, but H00 explicitly restricts this session to planning.
+`docs/sdd/ACTIVE_MILESTONE.md` plus explicit human authorization determine executable scope. `docs/sdd/EXECUTION_POLICY.md` is the canonical execution/gate policy; `docs/sdd/MILESTONE_ROADMAP.md` defines proposed sequencing and mandatory platform work. A proposal is not approval. On conflicting sources at the same level, STOP and request a HITL decision; do not silently reconcile them.
+
+## Reading budget and entrypoint
+At start read this file, `docs/README.md`, `docs/sdd/ACTIVE_MILESTONE.md`, `docs/sdd/EXECUTION_POLICY.md`, the active milestone's `spec.md`, `design.md`, `tasks.md` and `verification.md` if present, and `git status --short`. Consult only sections relevant to the request and active task; do not recursively read the repository or every milestone.
+Read further sources only for an identified dependency, citing file and section. Use `docs/DOCKER_DEV.md` and `docs/DEPLOYMENT.md` only for relevant authorized operations. Preserve baseline content and historical `docs/S0_REPORT.md` evidence; never rewrite history. Do not read legacy `docs/agents/ROLES.md` or old version directories. If a mandatory baseline is missing, STOP without deleting anything.
+
+## Active permissions and hard HITL gates
+Apply the exact gates in `docs/sdd/EXECUTION_POLICY.md`, section “Gates”:
+- **G0**: human approval of reconciliation and milestone roadmap after the H00 report.
+- **G1**: explicit approval of each milestone's spec/design, including scope, UI and data/security decisions.
+- **G2**: separate authorization of exactly one bounded task, with its exact ID and `tasks.md` checkbox. A checkbox alone is not human authorization.
+- **G3**: human acceptance of actual verification evidence and UI screenshot when relevant. Authorization of the next task or milestone is separate.
+- **GR**: explicit authorization for remote deployment, Access, migrations or costs, even after sprint/milestone approval.
+
+Execute only one authorized task per execution. Never advance autonomously to another task or milestone, self-approve evidence, or infer permission from a general “continue”, a historical S0/sprint approval, documentation acceptance or existing code. Determine allowed files and commands before acting. Explicitly scoped user instructions govern that request; they do not implicitly change the active milestone, accept gates or authorize unrelated work.
+
+While the active milestone is H00 **AUDIT / ONLY READ**, implementation authorization is **NONE**: local inspection and a read-only report only. No file edits, code changes, Docker, npm, installs, tests, builds, data mutations or deploy under H00 authorization. Do not start H00 automatically from this entrypoint. When explicitly requested, use `prompts/H00_READONLY_RECONCILE.md` within active permissions and stop after the report for G0. A separately authorized entrypoint correction does not execute or approve H00.
 
 ## Execution budget and anti-loop
-- At most **2 attempted repairs of the same root cause**; stop with blocker and alternatives afterward.
-- No unbounded loops, continuous watchers, interactive commands, background jobs or automatic next-task execution.
-- Before running a command record the purpose and expected output; use bounded process timeout where tooling supports it. If unsupported, avoid commands prone to hanging and report the limitation.
-- No repeated full-suite, Docker rebuild, dependency reinstall, or broad dependency upgrades as default; run relevant narrow checks first.
-- If a command fails twice, do not retry with cosmetic variations. Summarize evidence and ask for decision.
-- Never run `docker compose down -v`, broad delete/reset, destructive migration, remote CLI, deploy, or create paid resources without specific authorization.
-- Do not fabricate completion or mark code presence as tested behavior. Use `implemented-unverified` when appropriate.
-- One lead write agent; optional specialist review only when it will resolve a precise risk, bounded and read-only. Do not launch a swarm.
-
-## Delivery contract
-Each execution returns: active milestone/task, objective; changed files; actual tests with PASS/FAIL/NOT RUN; blockers; mapping to original IDs; cost/loop observations if available; next proposed action; and **STOP — awaiting HITL approval**. Update only allowed tracking files, without silently rewriting historical `S0_REPORT.md` evidence.
+Follow `docs/sdd/EXECUTION_POLICY.md`, sections “Anti-loop stop rules” and “Evidence format”:
+- At most **2 repair attempts for the same root cause**; then record blocker, evidence and alternatives and STOP. If a command fails twice, do not retry with cosmetic variations or pivot automatically to infrastructure changes.
+- No unbounded loops, continuous watchers, interactive commands, background jobs, reinstall loops or automatic next-task execution. No full-suite retries without a changed hypothesis; run relevant narrow checks first when authorized.
+- Before each command record its purpose and expected output; use bounded process timeout where supported. If unsupported, avoid commands prone to hanging and report the limitation. Markdown does not enforce wall-clock limits.
+- CI or Docker build: once only when explicitly part of the authorized task; one diagnostic retry only if justified. No broad dependency upgrades, silent downgrades or provider switches.
+- Never run `docker compose down -v`, broad delete/reset, destructive migration, remote CLI, deploy or create paid resources without specific authorization; apply GR as required.
+- Preserve existing uncommitted changes. One lead write agent; optional bounded, read-only specialist review only for a precise risk and when permitted by the request. No swarm.
 
 ## Architecture / sequencing guardrails
-Do not reinterpret H01 UI as completion of S1. UI can use explicitly labeled local fixtures for layout validation, not fake persistent metrics. Worker/D1 compatibility and protections are hard gates for any integrated CRUD, exams, or deployment. Docker reproducibility remains an accepted project requirement even if non-blocking UI work proceeds first.
+`docs/sdd/MILESTONE_ROADMAP.md`, section “Platform track (must not disappear)”, remains mandatory:
+- **P0**: Worker/D1 runtime foundation, S0-01..03/05/07; require actual runtime write/read evidence and protection gates for integrated CRUD/exams/deployment.
+- **P1**: reproducible local Docker, S0-04/08/09/10 and A0-01..10; mandatory for S0 closure. Docker and D1 are not deferred to remote release.
+Report unfinished P0/P1 tasks as pending. Do not declare S0 closed or CRUD complete before acceptance conditions are met. H01 presentation-only work may precede full Docker reproducibility only with a usable UI environment and explicit HITL authorization; H01 is not S1 completion. UI fixtures must be clearly labeled local layout data, never fake persistent metrics. Infrastructure blockers never waive Worker/D1, authentication, migration or security gates; separately authorize any nonblocking UI work.
 
-## Fuente única activa tras migración v3
-`docs/README.md` es el índice canónico. No leer `docs/agents/ROLES.md` heredado ni carpetas de versiones antiguas. Conservar el contenido exacto de los documentos baseline importados desde el checkout; el instalador construye una sola estructura. Si falta un baseline obligatorio, STOP, sin borrar nada.
+## Delivery and stop
+Return active milestone/task and objective; original IDs; changed files; environment and actual commands/results with PASS/FAIL/NOT RUN; UI evidence when applicable; security impact; blockers/unresolved issues; cost/loop observations if available; and the next proposed decision. Update only explicitly allowed tracking files. Never fabricate completion or treat code presence as tested behavior; use `implemented-unverified` until supported by evidence. Only a human can accept the result.
+End every execution with **STOP — awaiting HITL approval**. Do not start the next task.

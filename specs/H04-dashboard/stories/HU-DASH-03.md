@@ -8,11 +8,12 @@ Como usuario quiero que métricas sean exactas incluso cuando reabro o archivo t
 ## Resultado observable
 Agregados consistentes.
 
-## Escenarios de aceptación vinculados
-- **AC-H04-03 — Proveedor:** Dadas tareas de distintos proveedores, cuando filtro uno, entonces los KPIs y próximas tareas usan exclusivamente ese conjunto.
-- **AC-H04-04 — Consistencia:** Dada una tarea cuyo estado/minutos cambian, cuando recargo, entonces resumen y plan coinciden.
+## Escenarios de aceptación vinculados (F02)
 
-Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`](../spec.md). La selección anterior es la vinculación principal, no una renuncia de otros AC.
+- [AC-H04-02 — Progreso](../spec.md) → `H04-T01`, `H04-T02`, `H04-T03`, `H04-T04`.
+- [AC-H04-04 — Consistencia](../spec.md) → `H04-T02`, `H04-T04`.
+
+Definiciones completas en [spec.md](../spec.md); tareas en [tasks.md](../tasks.md). Los enlaces indican entrega y evidencia, no permisos de ejecución. Todos los AC del hito permanecen obligatorios; ningún criterio se elimina por corregir su asociación.
 
 ## Diseño y datos
 - Pantallas/API: / (dashboard).
@@ -23,7 +24,7 @@ Todos los escenarios del hito siguen siendo obligatorios en conjunto: [`spec.md`
 - Decisión de implementación: revisar [`design.md`](../design.md) y resolver ambigüedades con HITL.
 
 ## Tareas y evidencia
-- Tareas relacionadas: `H04-T04`.
+- Tareas relacionadas: `H04-T01`, `H04-T02`, `H04-T03`, `H04-T04`.
 - Evidencia mínima: Agregados consistentes y una ejecución reproducible de los AC vinculados, con PASS/FAIL/NOT RUN.
 - Registro de cierre en [`verification.md`](../verification.md) con resultado, entorno, cambios y aceptación humana.
 - **Estado:** PROPOSED / NO IMPLEMENTACIÓN AUTORIZADA.

@@ -4,7 +4,7 @@
 
 **Clasificación:** FEATURE/UI  
 **IDs originales:** `S1-02`, `S1-03`, `S1-04`, `S1-05`, `S1-06`  
-**Dependencias:** H01 AppShell; P0 Worker/D1, migraciones y autorización probadas; aprobación de alcance S1  
+**Dependencias:** H01 AppShell; S0 cerrado y aceptado mediante P0+P1 y A0-01..A0-10, incluyendo Worker/D1, migraciones y autorización probadas; aprobación de alcance S1 y G1/G2 propios de H02 (F03)
 **Superficies:** /certifications, /certifications/new, /certifications/[id]
 
 ## Resultado de producto
